@@ -1,0 +1,50 @@
+body{
+    margin:0; /*0;==0px;*/
+    background-image: url();
+    background-repeat:no-repeat;
+    background-size:cover;  /*전체를 cover*/
+}
+
+.container{
+    background-color: white;
+    min-height:100vh;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.title{
+    padding-top: 20px;
+}
+
+.task-area{
+    border:1px solid lightgrey;
+}
+
+.task-tabs{ /*All&&NotDone&&Done모음집*/
+    display:flex; /*부모 태그에게 flex사용*/
+    border-bottom:1px solid lightgrey;
+    position:relative; /*task-underline의 부모에게 relative를 준다*/
+}
+
+.task-tabs div{
+    padding:1em; /*본인 안을 기준으로 사이즈 늘이기*/
+} /*margin으로 하면 왜 더 폭이 작아 지는지를 모르겠다!!!!*/
+
+#task-underline{  /*id로 주는 경우:#으로 css 해줌*/
+    height: 4px;
+    background-color: pink;
+    position:absolute; /*absolute의 기준점이 task-tabs이 된다*/
+    width:52px;
+    left:0px;
+    top:52px;
+    padding:0px; 
+}
+
+.task{
+    display:flex; /*안에 내용 가로로 만들기*/
+    justify-content: space-between; /*안에 2가지 덩어리 간격 띄움*/
+    padding:2em; /*tasks줄 공간을 주고 싶을 때(안을 기준)*/
+}
+
+.task-done{
+    text-decoration: line-through; /*완료된 task의 줄긋기*/
+}
