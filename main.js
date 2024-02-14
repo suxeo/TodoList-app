@@ -15,7 +15,7 @@ let taskInput = document.getElementById("task-input");
 let addButton = document.getElementById("add-button"); //ID인 html에서 가져올 때
 let tabs = document.querySelectorAll(".task-tabs div"); //css에서 가져올 때
 let taskList = [];
-let mode='all'; //전역변수(글로벌 변수)
+let mode="all"; //전역변수(글로벌 변수)
 let filterList = [];
 //event 생성
 addButton.addEventListener("click",addTask) //이벤트,이벤트기능(함수-function)
@@ -39,16 +39,16 @@ function addTask(){
 }
  //할일task을 user가 보이는 보더에 추가하는 함수(user가 볼 수 있는 UI)
 function render(){ 
-    let List = [];
+    List = [];
     //1. 내가 선택한 탭에 따라서 
-    if(mode==='all'){
+    if(mode==="all"){
         List=taskList;
-    }else if(mode==='on-going' || mode==="done"){
+    }else if(mode==="on-going" || mode==="done"){
         List=filterList;
     }
     //2. 리스트를 달리 보여준다
     //all-taskList / ongoing,done - filterList
-    let resultHTML = ''; //render 함수에선 이전에 코드가 없어지고 다시 적어준다 (모든 task)
+    let resultHTML = ""; //render 함수에선 이전에 코드가 없어지고 다시 적어준다 (모든 task)
     for(let i=0;i<List.length;i++){  //넣어야 하는 것(task)들을 담을 수 있는 보더에 넣기 
         if(List[i].isComplete==true){  //taskList의 taskContent task완료일 때 줄을 그어주기 
             resultHTML += `<div class="task">
@@ -78,17 +78,17 @@ function toggleComplete(id){ //check버튼을 누른 후 실행되는 코드
     console.log("id:",id); //확인용
     for(let i=0;i<taskList.length;i++){
         if(taskList[i].id==id){
-            taskList[i].isComplete=!taskList[i].isComplete //false=>true 변경
+            taskList[i].isComplete=!taskList[i].isComplete; //false=>true 변경
             break;  //for문을 종료
         }
     }
-    render(); //render함수 호출!
+    render(); //filter함수 호출!
     console.log(taskList); //확인용
 }
 //Task를 삭제하는 함수
 function deleteTask(id){  //배열로부터 item을 삭제하는 함수
     console.log("삭제하자",id); //확인용
-    for(let i=0;i<taskList[i].length;i++){
+    for(let i=0;i<taskList.length;i++){
         if(taskList[i].id==id){  //tasklist[i].id가 내가 전해받은 id와 같을 경우
             taskList.splice(i,1) //index i번째 item을 1개만 삭제 하겠다
             break;
@@ -103,6 +103,7 @@ function filter(event){ //내가 누구를 받고 있는지 event가 가지고 �
     console.log("filter",event.target.id); //event에서 내가 집은 애는 누구냐? ex)<div id="on-going">Not done</div>중 on-going만 나옴
     mode = event.target.id;
     //3가지 case를 만들기
+    filterList=[];
     if(mode ==="all"){
         //전체 리스트를 보여준다
         render();
@@ -115,17 +116,16 @@ function filter(event){ //내가 누구를 받고 있는지 event가 가지고 �
                 filterList.push(taskList[i]);
             }
         }
-        render();
         console.log("진행중",filterList); //확인용
     }
-    else if(mode=="done"){  //끝난 case : task.isComplete=true
+    else if(mode==="done"){  //끝난 case : task.isComplete=true
         for(let i=0;i<taskList.length;i++){
-            if(taskList[i],isComplete===true){
+            if(taskList[i].isComplete===true){
                 filterList.push(taskList[i]);
             }
         }
-        render();
     }
+    render();
 }
 //unique한 ID생성 함수
 function randomIDGenerate(){
