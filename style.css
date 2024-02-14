@@ -27,6 +27,7 @@ body{
 
 .task-tabs div{
     padding:1em; /*본인 안을 기준으로 사이즈 늘이기*/
+    cursor:pointer;
 } /*margin으로 하면 왜 더 폭이 작아 지는지를 모르겠다!!!!*/
 
 #task-underline{  /*id로 주는 경우:#으로 css 해줌*/
