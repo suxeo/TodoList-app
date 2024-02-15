@@ -30,7 +30,7 @@ body{
     cursor:pointer;
 } /*margin으로 하면 왜 더 폭이 작아 지는지를 모르겠다!!!!*/
 
-#task-underline{  /*id로 주는 경우:#으로 css 해줌*/
+#tab-underline{  /*id로 주는 경우:#으로 css 해줌*/
     height: 4px;
     background-color: pink;
     position:absolute; /*absolute의 기준점이 task-tabs이 된다*/
@@ -38,6 +38,7 @@ body{
     left:0px;
     top:52px;
     padding:0px; 
+    transition:0.5s;
 }
 
 .task{

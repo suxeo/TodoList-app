@@ -14,6 +14,8 @@
 let taskInput = document.getElementById("task-input");
 let addButton = document.getElementById("add-button"); //ID인 html에서 가져올 때
 let tabs = document.querySelectorAll(".task-tabs div"); //css에서 가져올 때
+let underLine = document.getElementById("tab-underline"); 
+console.log(underLine);
 let taskList = [];
 let mode="all"; //전역변수(글로벌 변수)
 let filterList = [];
@@ -43,7 +45,7 @@ function render(){
     //1. 내가 선택한 탭에 따라서 
     if(mode==="all"){
         List=taskList;
-    }else if(mode==="on-going" || mode==="done"){
+    }else if(mode==="on-going" || mode==="done"){  //else{}로 치환가능
         List=filterList;
     }
     //2. 리스트를 달리 보여준다
@@ -96,19 +98,20 @@ function deleteTask(id){  //배열로부터 item을 삭제하는 함수
 
     }
     console.log(taskList);//확인용
-    render();
+    filter();
 }
 
 function filter(event){ //내가 누구를 받고 있는지 event가 가지고 있다(탭들)
     console.log("filter",event.target.id); //event에서 내가 집은 애는 누구냐? ex)<div id="on-going">Not done</div>중 on-going만 나옴
-    mode = event.target.id;
+    if(event){
+        mode = event.target.id;
+        underLine.style.width = event.target.offsetWidth + "px"; //under바 폭
+        underLine.style.left = event.target.offsetLeft + "px"; //x좌표
+        underLine.style.top = event.target.offsetTop + (event.target.offsetHeight -4) + "px";  //y좌표
+    }//진행중 상태에서 끝남으로 표시하면 바로 사라지는 부분은 event가 없음 그래서 조건 추가
     //3가지 case를 만들기
     filterList=[];
-    if(mode ==="all"){
-        //전체 리스트를 보여준다
-        render();
-    }
-    else if(mode==="on-going"){
+    if(mode==="on-going"){
         //진행 중인 item을 보여준다
         //task.isComplete=false
         for(let i=0;i<taskList.length;i++){
@@ -116,6 +119,7 @@ function filter(event){ //내가 누구를 받고 있는지 event가 가지고 �
                 filterList.push(taskList[i]);
             }
         }
+        render();
         console.log("진행중",filterList); //확인용
     }
     else if(mode==="done"){  //끝난 case : task.isComplete=true
@@ -124,8 +128,8 @@ function filter(event){ //내가 누구를 받고 있는지 event가 가지고 �
                 filterList.push(taskList[i]);
             }
         }
+        render();
     }
-    render();
 }
 //unique한 ID생성 함수
 function randomIDGenerate(){
