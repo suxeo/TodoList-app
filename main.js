@@ -19,7 +19,11 @@ console.log(underLine);
 let taskList = [];
 let mode="all"; //전역변수(글로벌 변수)
 let filterList = [];
+
+tabs.forEach((m) => m.addEventListener("click", (e) => indicator(e)))
+
 //event 생성
+//할일 추가
 addButton.addEventListener("click",addTask) //이벤트,이벤트기능(함수-function)
 //<button onclick="toggleComplete('${taskList[i].id}')">Check</button> check버튼 클릭시,완료 false=>true,true=>false변경 코드
 
@@ -35,13 +39,38 @@ function addTask(){
         taskContent: taskInput.value, //user가 적은 값이 객체의 content
         isComplete: false  //task가 미완료
     }
-    taskList.push(task); //다양한 객체인 task를 모아 놓은 taskList
+    if(taskInput.value.length!=0){ //문자가 있어야 추가가 되도록
+        taskList.push(task); //다양한 객체인 task를 모아 놓은 taskList
+    }
     console.log(taskList); //확인용
     render();
 }
+
+
+function indicator(e) {
+    e.currentTarget.style.color = "white";
+    e.currentTarget.style.fontWeight = "bold";
+    tabs.forEach((m) => {
+        if (e.currentTarget !== m) {
+            m.style.color = "black"
+        }
+    })
+    line.style.display = "block";
+    line.style.left = e.currentTarget.offsetLeft + "px";
+    line.style.width = e.currentTarget.offsetWidth + "px";
+    line.style.top = e.currentTarget.offsetTop + e.currentTarget.offsetHeight - 4 + "px";
+}
+
+line.style.left = tabs[1].offsetLeft + "px";
+line.style.width = tabs[1].offsetWidth + "px";
+line.style.top = tabs[1].offsetTop + tabs[1].offsetHeight -4 + "px";
+console.log("tab", tabs[1])
+
+
+//js는 string함수에 넘겨줄 때 홑따옴표로 묶어서 줘야함
  //할일task을 user가 보이는 보더에 추가하는 함수(user가 볼 수 있는 UI)
 function render(){ 
-    List = [];
+    let List = [];
     //1. 내가 선택한 탭에 따라서 
     if(mode==="all"){
         List=taskList;
@@ -54,42 +83,49 @@ function render(){
     for(let i=0;i<List.length;i++){  //넣어야 하는 것(task)들을 담을 수 있는 보더에 넣기 
         if(List[i].isComplete==true){  //taskList의 taskContent task완료일 때 줄을 그어주기 
             resultHTML += `<div class="task">
-            <div class="task-done">${List[i].taskContent}</div>  
-            <div>
-                <button onclick="toggleComplete('${List[i].id}')">Check</button>  
-                <button onclick="deleteTask('${List[i].id})">Delete</button>
-            </div>
-        </div>`
+                <button class="edit" onclick="editTask('${List[i].id}')"}><i class="fa-solid fa-pencil"></i></button>
+                <div class="task-done">${List[i].taskContent}</div>  
+                <div class="buttonClass">
+                    <button class="isComplete" onclick="toggleComplete('${List[i].id}')"><i class="fa-regular fa-circle-check"></i></button>  
+                    <button class="delete" onclick="deleteTask('${List[i].id}')"><i class="fa-regular fa-trash-can"></i></button>
+                </div>
+            </div>`
         }
         else{  //task 완료가 false일 때(줄긋지 않기)
             resultHTML += `<div class="task">
-            <div>${List[i].taskContent}</div>  
-            <div>
-                <button onclick="toggleComplete('${List[i].id}')">Check</button>
-                <button onclick="deleteTask('${List[i].id}')">Delete</button>
-            </div>
-        </div>`;
+                <button class="edit" onclick="editTask('${List[i].id}')"}><i class="fa-solid fa-pencil"></i></button>
+                <div class="task-not-done">${List[i].taskContent}</div>  
+                <div class="buttonClass">
+                    <button class="isNotComplete" onclick="toggleComplete('${List[i].id}')"><i class="fa-regular fa-circle-check"></i></button>  
+                    <button class="delete" onclick="deleteTask('${List[i].id}')"><i class="fa-regular fa-trash-can"></i></button>
+                </div>
+            </div>`
         }
         
     }
 
     document.getElementById("task-board").innerHTML = resultHTML;
 }
-//task check를 한 task id를 반복문으로 선별해 false=>true, true=>false로 바꾸는 함수 
+//task check를 한 task id를 반복문으로 선별해 false<=>true
 function toggleComplete(id){ //check버튼을 누른 후 실행되는 코드
     console.log("id:",id); //확인용
     for(let i=0;i<taskList.length;i++){
         if(taskList[i].id==id){
             taskList[i].isComplete=!taskList[i].isComplete; //false=>true 변경
+            render()
             break;  //for문을 종료
         }
     }
-    render(); //filter함수 호출!
     console.log(taskList); //확인용
 }
 //Task를 삭제하는 함수
 function deleteTask(id){  //배열로부터 item을 삭제하는 함수
     console.log("삭제하자",id); //확인용
+
+    if (!confirm(`삭제하시겠습니까?`)) {
+        return;
+    }
+
     for(let i=0;i<taskList.length;i++){
         if(taskList[i].id==id){  //tasklist[i].id가 내가 전해받은 id와 같을 경우
             taskList.splice(i,1) //index i번째 item을 1개만 삭제 하겠다
@@ -97,8 +133,38 @@ function deleteTask(id){  //배열로부터 item을 삭제하는 함수
         }
 
     }
+    for(let i=0;i<filterList.length;i++){
+        if(taskList[i].id==id){  //tasklist[i].id가 내가 전해받은 id와 같을 경우
+            taskList.splice(i,1) //index i번째 item을 1개만 삭제 하겠다
+            break;
+        }
+
+    }
     console.log(taskList);//확인용
-    filter();
+    render();
+}
+
+//수정
+function editTask(id) {
+    console.log("함수실행");
+    let editText = prompt(`수정사항을 입력해주세요`, "");
+    if (editText == "") {
+        alert("수정할 사항을 다시 입력해주세요");
+        return;
+    }
+    for (let i = 0; i < taskList.length; i++) {
+        if (taskList[i].id == id) {
+            taskList[i].taskContent = editText;
+            break;
+        }
+     }
+     for (let i = 0; i < filterList.length; i++) {
+        if (filterList[i].id == id) {
+            filterList[i].taskContent = editText;
+            break;
+        }
+     }
+     render();
 }
 
 function filter(event){ //내가 누구를 받고 있는지 event가 가지고 있다(탭들)
@@ -111,7 +177,11 @@ function filter(event){ //내가 누구를 받고 있는지 event가 가지고 �
     }//진행중 상태에서 끝남으로 표시하면 바로 사라지는 부분은 event가 없음 그래서 조건 추가
     //3가지 case를 만들기
     filterList=[];
-    if(mode==="on-going"){
+    if(mode==="all"){
+        //전체 리스트를 보여준다
+        render();
+    }
+    else if(mode==="on-going"){
         //진행 중인 item을 보여준다
         //task.isComplete=false
         for(let i=0;i<taskList.length;i++){
@@ -131,7 +201,7 @@ function filter(event){ //내가 누구를 받고 있는지 event가 가지고 �
         render();
     }
 }
-//unique한 ID생성 함수
+//unique한 ID생성 함수(return type:string)
 function randomIDGenerate(){
     return "_" + Math.random().toString(36).substr(2, 9);
 }

@@ -6,16 +6,11 @@
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/d9d9614d8e.js" crossorigin="anonymous"></script> 
 </head>
 <body>
     <div class="container">
         <h1 class="title">Todo List</h1>  <!--Todo List-->
-
-        <section class="input-area">  <!--input영역-->
-            <input type="text" id="task-input"/>
-            <button id="add-button">+</button>
-        </section>
-
         <section class="task-area"> <!--task 관련 영역-->
             <div class="task-tabs">
                 <div id="tab-underline"></div>
@@ -29,11 +24,15 @@
                     Done
                 </div>
             </div>
-            <div id="task-board"> <!--각각의 task들을 가지고 있는 보드-->
+            <div id="task-board"></i> <!--각각의 task들을 가지고 있는 보드-->
                 <div class="task">
                     
                 </div>
             </div>
+        </section>
+        <section class="input-area">  <!--input영역-->
+            <input type="text" id="task-input" placeholder="Task name" maxlength="15"/>
+            <button id="add-button"><i class="fa-solid fa-circle-plus"></i></button>
         </section>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>

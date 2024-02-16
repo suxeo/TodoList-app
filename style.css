@@ -1,52 +1,183 @@
+@font-face{
+    font-family:'DNFBitBitv2';
+    font-style:normal;font-weight:400;src:url('//cdn.df.nexon.com/img/common/font/DNFBitBitv2.otf')format('opentype');
+}
+
 body{
-    margin:0; /*0;==0px;*/
-    background-image: url();
-    background-repeat:no-repeat;
-    background-size:cover;  /*전체를 cover*/
+    margin:50px; /*0;==0px;*/
+    width:100%;
+    height: 100vh;
+    background-image: url('https://i.pinimg.com/originals/b1/38/20/b138202b403819d532d14ffd19d25b40.png');
+    display:flex;
+    justify-content: center;
+    align-items: cover;
+    /* background-repeat:no-repeat;
+    background-size:cover;  전체를 cover */
 }
 
 .container{
-    background-color: white;
-    min-height:100vh;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-}
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width:70vh;
+    /*내가 보는 화면의 높이 만큼 최소 height를 설정*/
+    height:80vh;
 
-.title{
-    padding-top: 20px;
-}
+    border-radius: 20px;
+    background: linear-gradient(145deg, #8cc4ff, #79c5e8);  /*container의 색입혀주기(두가지색 그라데이션)*/
+    box-shadow: rgba(50, 56, 236, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 
-.task-area{
-    border:1px solid lightgrey;
+    /* border-radius: 24px;*/
+    /* background: linear-gradient(145deg, #2d2a4d, #36325c); */
+    box-shadow:  24px 24px 48px #c291f1,
+                    -24px -24px 48px #5482ef;  /*그라데이션이며,선부분이 없어진다*/
+
+}
+.title{ /*todolist*/
+    padding-top: 0.5em;
+    padding-bottom:0.3em;
+    font-size:20px;
+    font-family: 'DNFBitBitv2';
 }
 
 .task-tabs{ /*All&&NotDone&&Done모음집*/
     display:flex; /*부모 태그에게 flex사용*/
+    justify-content: space-evenly;
     border-bottom:1px solid lightgrey;
     position:relative; /*task-underline의 부모에게 relative를 준다*/
+    background-color: dodgerblue;
+    font-size: 13px;
+    font-family: 'DNFBitBitv2'; /*탭의 글꼴(all,not done,done)*/
 }
 
 .task-tabs div{
-    padding:1em; /*본인 안을 기준으로 사이즈 늘이기*/
+    /* padding:1em; 본인 안을 기준으로 사이즈 늘이기 */
+    /* margin-bottom:1.3em; */
+    padding-top:0.3em;
+    padding-bottom: 1em;
     cursor:pointer;
 } /*margin으로 하면 왜 더 폭이 작아 지는지를 모르겠다!!!!*/
 
+.task-tabs div:hover{ /*탭 위로 가져다 됐을 때*/
+    color:white;
+    font-weight: bold;
+}
+
+.task-area{
+    /* border:1px solid lightgrey; */
+    height:100%;
+    width:100%;
+    height: 80%;
+    background-color: white;
+}
+
+#task-board{
+    color:#1B192F;
+    margin:0px 3%;
+    font-family:'DNFBitBitv2';
+    font-size: 18px;
+    text-align: center;
+    padding: 0.5em;
+}
+/*under-line이 움직이기 때문에 id값으로*/
 #tab-underline{  /*id로 주는 경우:#으로 css 해줌*/
+    display:flex;
     height: 4px;
     background-color: pink;
     position:absolute; /*absolute의 기준점이 task-tabs이 된다*/
-    width:52px;
+    width:50px;
     left:0px;
-    top:52px;
+    top:0px;
     padding:0px; 
     transition:0.5s;
 }
-
+/* 
 .task{
-    display:flex; /*안에 내용 가로로 만들기*/
-    justify-content: space-between; /*안에 2가지 덩어리 간격 띄움*/
-    padding:2em; /*tasks줄 공간을 주고 싶을 때(안을 기준)*/
-}
+    display:flex; 안에 내용 가로로 만들기
+    justify-content: space-between; 안에 2가지 덩어리 간격 띄움
+    padding:2em; tasks줄 공간을 주고 싶을 때(안을 기준) 
+} */
 
 .task-done{
     text-decoration: line-through; /*완료된 task의 줄긋기*/
+}
+
+.input-area{
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    box-sizing: border-box;
+    background-color: #d67ab7;
+    border-radius: 0px 0px 24px 24px;
+    width:100%;
+    height:20%;
+    position:relative;
+}
+.input-area input{
+    width:100%;
+    height:30%;
+    margin:1em;
+    border:0;
+    border-radius: 7px;
+    font-size: 15px;
+    padding:5px;
+    font-family: 'DNFBitBitv2';
+}
+.input-area button{
+    position:absolute;
+    right:15px;
+    border:none;
+    background-color: transparent;
+    color:#bb89ea;
+    cursor: pointer;
+    font-size:20px;
+}
+.input-area button:hover{
+    color:#52cc34;
+}
+
+
+.task {
+    padding : 5px;
+    padding-left: 50px;
+    display : flex;
+    align-items:center;
+}
+.isComplete {
+    flex-basis : 20%;
+}
+.isNotComplete {
+    flex-basis : 20%;
+}
+
+.task-not-done {
+    flex-basis: 70%;
+}
+.task-done {
+    flex-basis : 70%;
+}
+.buttonClass {
+    flex-basis : 30%;
+}
+.task button {
+    background-color: transparent;
+    border : none;
+    font-size : 15px;
+    cursor : pointer;
+}
+.edit{
+    padding-right: 30px;
+}
+.edit:hover {
+    color : #A689EA;
+}
+.delete:hover {
+    color : #FF8911;
+}
+.isComplete {
+    color : gray;
+}
+.isNotComplete {
+    color : green;
 }
